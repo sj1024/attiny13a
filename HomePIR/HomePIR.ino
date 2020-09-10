@@ -1,11 +1,12 @@
 #include <avr/sleep.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 //#include "uart.h"
 
+const uint8_t PIN_RESET = 3; // pin 2
 const uint8_t PIN_LIGHT = 4; // pin 3
 const uint8_t PIN_PIR2  = 2; // pin 7
-//const uint8_t PIN_PIR2  = 3; // pin 2
 const uint8_t PIN_PIR1  = 1; // pin 6
 const uint8_t PIN_PIR0  = 0; // pin 5
 
@@ -18,6 +19,8 @@ ISR(PCINT1_vect) {
 }
 ISR(PCINT2_vect) {
 }
+ISR(WDT_vect) {
+}
 
 void setup()
 {
@@ -26,9 +29,6 @@ void setup()
   pinMode(PIN_PIR0, INPUT);
   pinMode(PIN_PIR1, INPUT);
   pinMode(PIN_PIR2, INPUT);
-  pinMode(PIN_LIGHT, OUTPUT);
-  digitalWrite(PIN_LIGHT, LOW);
-  delay(500);
 }
 
 void sleep() {
@@ -69,6 +69,10 @@ void loop() {
 	 digitalWrite(PIN_LIGHT, LOW);
   } else {
 	 digitalWrite(PIN_LIGHT, HIGH);
+	 delay(60000);
   }
-  sleep();
+
+  digitalWrite(PIN_RESET, LOW);	// Poweroff
+  pinMode(PIN_LIGHT, OUTPUT);
+  pinMode(PIN_RESET, OUTPUT);
 }
