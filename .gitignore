@@ -1,2 +1,4 @@
-MyToken.py
+MyToken.*
+*.pyc
+
 
