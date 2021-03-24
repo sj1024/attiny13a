@@ -1,4 +1,6 @@
 MyToken.*
 *.pyc
+.DS_Store
+*.swp
 
 
